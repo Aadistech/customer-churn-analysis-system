@@ -1,0 +1,24 @@
+<!-- Corporate Business Header Bar -->
+<div class="corp-header">
+    <a href="/" class="corp-logo">AADIBI<span>.AI</span></a>
+
+    <div class="corp-nav-right">
+        <div class="corp-nav-item">
+            <span>Executive Analyst</span>
+            <span>Aadibi</span>
+        </div>
+        <div class="corp-nav-item">
+            <span>System Status</span>
+            <span style="color: #10b981;">● Online</span>
+        </div>
+    </div>
+</div>
+
+<!-- Subheader Navigation Categories -->
+<div class="corp-subheader">
+    <a href="/" {% if active_page == 'predict' %}class="active"{% endif %}>📊 Individual Predictor</a>
+    <a href="/dashboard" {% if active_page == 'dashboard' %}class="active"{% endif %}>📈 BI Analytics Dashboard</a>
+    <a href="/evaluation" {% if active_page == 'evaluation' %}class="active"{% endif %}>⚙️ Model Evaluation</a>
+    <a href="/batch" {% if active_page == 'batch' %}class="active"{% endif %}>📁 Batch Processing</a>
+    <a href="/about" {% if active_page == 'about' %}class="active"{% endif %}>ℹ️ System Architecture</a>
+</div>

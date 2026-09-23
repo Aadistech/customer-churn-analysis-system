@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Predictor | Aadibi Enterprise Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div class="main-workspace">
+        <h2 style="margin-top: 0; color: #0f172a;">Customer Churn Prediction Engine</h2>
+        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">Real-time customer classification driven by Scikit-Learn Random Forest telemetry.</p>
+
+        <div class="card">
+            <form action="/predict" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="account_length">Account Length (Months)</label>
+                        <input type="number" id="account_length" name="account_length" value="{{ request.form.get('account_length', '95') }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_day_minutes">Total Day Minutes</label>
+                        <input type="number" step="0.1" id="total_day_minutes" name="total_day_minutes" value="{{ request.form.get('total_day_minutes', '142.5') }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer_service_calls">Customer Service Calls</label>
+                        <input type="number" id="customer_service_calls" name="customer_service_calls" value="{{ request.form.get('customer_service_calls', '2') }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="intl_plan">International Plan</label>
+                        <select id="intl_plan" name="intl_plan">
+                            <option value="0" {% if request.form.get('intl_plan') == '0' %}selected{% endif %}>No</option>
+                            <option value="1" {% if request.form.get('intl_plan') == '1' %}selected{% endif %}>Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full">
+                        <button type="submit">Run Prediction Model</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if prediction_text %}
+                <div class="result {% if 'HIGH RISK' in prediction_text %}high-risk{% else %}low-risk{% endif %}">
+                    {{ prediction_text }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
