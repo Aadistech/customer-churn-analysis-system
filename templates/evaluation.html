@@ -4,55 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Evaluation | Aadibi.ai</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     {% include 'header.html' %}
 
-    <div class="main-workspace">
-        <h2 style="margin-top: 0; color: #0f172a;">Machine Learning Model Evaluation</h2>
-        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">Performance metrics and classification report for the trained Random Forest classifier.</p>
+    <div class="page">
+        <div class="page-head">
+            <h1>Machine Learning Model Evaluation</h1>
+            <p>Performance metrics and classification report for the trained Random Forest classifier, evaluated on a stratified 80/20 train-test split with balanced class weighting.</p>
+        </div>
 
-        <div class="card" style="max-width: 800px;">
-            <h3 style="margin-top:0; color: #0f172a;">Random Forest Performance Metrics</h3>
-            <p style="color: #64748b; font-size: 14px;">Evaluated on stratified test split (80/20 train-test ratio with balanced class weighting).</p>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);">
+        <div class="panel panel-pad" style="max-width: 820px;">
+            <div class="section-title"><svg class="icon"><use href="#i-target"/></svg>Classification report</div>
+
+            <table class="metric-table">
                 <thead>
-                    <tr style="background-color: #f1f5f9; text-align: left;">
-                        <th style="padding: 12px 16px; font-size: 13px; color: #334155;">Class Category</th>
-                        <th style="padding: 12px 16px; font-size: 13px; color: #334155;">Precision</th>
-                        <th style="padding: 12px 16px; font-size: 13px; color: #334155;">Recall</th>
-                        <th style="padding: 12px 16px; font-size: 13px; color: #334155;">F1-Score</th>
-                        <th style="padding: 12px 16px; font-size: 13px; color: #334155;">Support</th>
+                    <tr>
+                        <th>Class</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1-score</th>
+                        <th>Support</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="border-bottom: 1px solid var(--border);">
-                        <td style="padding: 12px 16px; font-size: 14px;"><strong>Stayed (0)</strong></td>
-                        <td style="padding: 12px 16px; font-size: 14px;">0.94</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">0.96</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">0.95</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">114</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--border);">
-                        <td style="padding: 12px 16px; font-size: 14px;"><strong>Churned (1)</strong></td>
-                        <td style="padding: 12px 16px; font-size: 14px;">0.76</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">0.68</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">0.72</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">19</td>
+                    <tr>
+                        <td><strong>Stayed (0)</strong></td>
+                        <td><div class="metric-cell"><span class="num">0.94</span><div class="metric-bar"><span style="width:94%"></span></div></div></td>
+                        <td><div class="metric-cell"><span class="num">0.96</span><div class="metric-bar"><span style="width:96%"></span></div></div></td>
+                        <td><div class="metric-cell"><span class="num">0.95</span><div class="metric-bar"><span style="width:95%"></span></div></div></td>
+                        <td>114</td>
                     </tr>
                     <tr>
-                        <td style="padding: 12px 16px; font-size: 14px;"><strong>Overall Accuracy</strong></td>
-                        <td colspan="3" style="padding: 12px 16px; text-align: center; font-weight: bold; font-size: 14px;">92.5%</td>
-                        <td style="padding: 12px 16px; font-size: 14px;">133</td>
+                        <td><strong>Churned (1)</strong></td>
+                        <td><div class="metric-cell"><span class="num">0.76</span><div class="metric-bar"><span style="width:76%"></span></div></div></td>
+                        <td><div class="metric-cell"><span class="num">0.68</span><div class="metric-bar"><span style="width:68%"></span></div></div></td>
+                        <td><div class="metric-cell"><span class="num">0.72</span><div class="metric-bar"><span style="width:72%"></span></div></div></td>
+                        <td>19</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="accuracy-banner">
+                <div>
+                    <div class="label">Overall accuracy</div>
+                    <div class="num">92.5%</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="label">Test support</div>
+                    <div class="num" style="font-size:20px; color:#fff;">133</div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

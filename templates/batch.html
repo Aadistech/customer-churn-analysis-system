@@ -4,25 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batch Processing | Aadibi.ai</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     {% include 'header.html' %}
 
-    <div class="main-workspace">
-        <h2 style="margin-top: 0; color: #0f172a;">Batch Churn Prediction Module</h2>
-        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">Upload customer datasets in bulk to process automated risk scoring and recommendations.</p>
-
-        <div class="card" style="max-width: 600px; text-align: center; padding: 40px 30px;">
-            <h3 style="margin: 0 0 10px 0; color: #0f172a;">Upload Customer CSV Dataset</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Select your raw telemetry file to generate bulk risk signals.</p>
-            
-            <input type="file" style="margin-bottom: 20px; padding: 10px; border: 1px dashed #cbd5e1; border-radius: 6px; width: 100%; box-sizing: border-box; background: #f8fafc;">
-            <button onclick="alert('Bulk processing pipeline active! Output saved to output/bulk_prediction_results.csv')" style="width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer;">Process Bulk Dataset</button>
+    <div class="page">
+        <div class="page-head">
+            <h1>Batch Churn Prediction</h1>
+            <p>Upload a customer telemetry CSV (same columns as the training dataset, minus Churn) to score every row in one pass.</p>
         </div>
+
+        {% if batch_error %}
+        <div class="result-banner risk-error">
+            <div class="result-copy">
+                <h3><svg class="icon" style="vertical-align:-3px; margin-right:4px;"><use href="#i-alert-triangle"/></svg> Couldn't process this file</h3>
+                <p>{{ batch_error }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="panel panel-pad" style="max-width: 640px;">
+            <form action="/batch" method="POST" enctype="multipart/form-data" id="batch-form">
+                <label class="dropzone" id="dropzone" for="dataset-input">
+                    <div class="icon-circle"><svg class="icon" style="width:20px;height:20px;"><use href="#i-upload"/></svg></div>
+                    <h4>Drop your CSV here, or click to browse</h4>
+                    <p>Accepts .csv files exported from your telemetry warehouse</p>
+                    <input type="file" name="dataset" id="dataset-input" accept=".csv" required>
+                </label>
+
+                <div class="file-chip" id="file-chip">
+                    <svg class="icon"><use href="#i-file"/></svg>
+                    <span class="name" id="file-name">&mdash;</span>
+                    <span class="size" id="file-size"></span>
+                </div>
+
+                <div class="progress-track" id="progress-track"><span id="progress-bar"></span></div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block" id="batch-submit">
+                        <span class="spinner"></span>
+                        <span class="btn-label"><span class="btn-label-default">Process dataset</span></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if batch_summary %}
+        <div class="panel panel-pad" style="max-width: 900px; margin-top: 22px;">
+            <div class="section-title"><svg class="icon"><use href="#i-server"/></svg>Batch results</div>
+
+            <div class="batch-summary" style="margin-top:0;">
+                <div class="kpi-card"><h3>Rows scored</h3><p>{{ batch_summary.total }}</p></div>
+                <div class="kpi-card"><h3>High risk</h3><p class="down">{{ batch_summary.high_risk }}</p></div>
+                <div class="kpi-card"><h3>Low risk</h3><p class="up">{{ batch_summary.low_risk }}</p></div>
+            </div>
+
+            {% if batch_rows %}
+            <table class="metric-table" style="margin-top:20px;">
+                <thead><tr><th>State</th><th>Risk</th><th>Churn probability</th></tr></thead>
+                <tbody>
+                    {% for row in batch_rows %}
+                    <tr>
+                        <td>{{ row.State }}</td>
+                        <td>{{ row.risk }}</td>
+                        <td>{{ row.churn_probability }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p style="font-size:12.5px; color:var(--text-muted); margin-top:10px;">Showing the first {{ batch_rows|length }} of {{ batch_summary.total }} rows.</p>
+            {% endif %}
+
+            <a href="{{ url_for('download_batch') }}" class="btn btn-ghost" style="margin-top:14px;">
+                <svg class="icon"><use href="#i-download"/></svg> Download full results CSV
+            </a>
+        </div>
+        {% endif %}
     </div>
 
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

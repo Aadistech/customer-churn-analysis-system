@@ -39,14 +39,13 @@ def initialize_database():
     # Query 2: Churn by Customer Service Calls
     query_service = """
     SELECT 
-        [Customer servicecalls], 
+        [Customer service calls], 
         COUNT(*) as Customer_Count,
         SUM(CASE WHEN Churn = 1 OR Churn = 'True' THEN 1 ELSE 0 END) as Churned_Count
     FROM customers
-    GROUP BY [Customer servicecalls]
-    ORDER BY [Customer servicecalls] DESC;
+    GROUP BY [Customer service calls]
+    ORDER BY [Customer service calls] DESC;
     """
-    # Note: Adjust column name if your CSV uses 'Customer service calls' with a space
     try:
         service_df = pd.read_sql(query_service, conn)
         print("\n2. Churn Analysis by Customer Service Calls:")
