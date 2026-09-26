@@ -22,7 +22,7 @@
                 <svg viewBox="0 0 74 74">
                     <circle class="track" cx="37" cy="37" r="30"></circle>
                     <circle class="value" cx="37" cy="37" r="30" stroke-dasharray="188.5"
-                        style="stroke-dashoffset: {{ 188.5 - (188.5 * (churn_probability or 0) / 100) }};"></circle>
+                        data-dasharray="188.5" data-probability="{{ churn_probability or 0 }}"></circle>
                 </svg>
                 <div class="pct">{{ churn_probability }}%</div>
             </div>
