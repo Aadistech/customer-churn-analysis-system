@@ -262,3 +262,86 @@ button[type="submit"]:hover {
 }
 .chart-card h4 { margin: 0 0 10px 0; font-size: 14px; }
 .chart-card img { max-width: 100%; height: auto; border-radius: 6px; }
+
+/* ============================================================
+   SECONDARY NAV TABS
+   ============================================================ */
+.secondary-nav {
+    background-color: #1e293b;
+    border-bottom: 1px solid #334155;
+    padding: 0 5%;
+    display: flex;
+    justify-content: center; /* Centers the navigation links */
+}
+
+.nav-tabs-container {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 1rem 0;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-tab:hover {
+    color: #f8fafc;
+}
+
+.nav-tab.active-tab {
+    color: #38bdf8;
+    border-bottom: 2px solid #38bdf8;
+}
+
+/* ============================================================
+   CENTERED HERO HEADER
+   ============================================================ */
+.main-prediction-wrapper {
+    max-width: 800px;
+    margin: 0 auto; /* Centers the entire block on the page */
+    padding: 3rem 1.5rem;
+}
+
+.page-header-centered {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.gradient-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    /* Creates a modern blue gradient text effect */
+    background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ============================================================
+   CENTERED FORM CARD
+   ============================================================ */
+.prediction-card-centered {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    width: 100%;
+}
